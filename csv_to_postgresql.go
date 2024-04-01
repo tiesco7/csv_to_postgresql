@@ -173,3 +173,19 @@ func iniciaLog(insertions, connections *int) {
 	}()
 }
 
+func parseColunas(columns []string, query *string) {
+
+	*query = "INSERT INTO "+TABELA+" ("
+	placeholder := "VALUES ("
+	for i, c := range columns {
+		if i == 0 {
+			*query += " \""+c+"\""
+			placeholder += "?"
+		} else {
+			*query += " ,\n\""+c+"\""
+			placeholder += ",\n ?"
+		}
+	} 
+	placeholder += ")"
+	*query += ") " + placeholder 
+}
