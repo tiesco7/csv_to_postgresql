@@ -28,7 +28,9 @@ var (
 func main() {
 	parseArgsDoCMD()
 	file, err := os.Open(ARQUIVO)
-	if err != nil { log.Fatal(err.Error()) }
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	reader := csv.NewReader(file)
 	reader.Comma = DELIMITADOR
 	reader.LazyQuotes = true
@@ -95,3 +97,4 @@ func main() {
 	log.Printf("Status: %d inserções\n", insercoes)
 	log.Printf("Tempo de execução: %s\n", decorrido)
 }
+
