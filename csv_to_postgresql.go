@@ -130,3 +130,19 @@ func parseArgsDoCMD() {
 	IP = *ip
 }
 
+// inserção
+func insert(id int, query string, db *sql.DB, callback chan<- int, conns *int, concorrencia *sync.WaitGroup, args []interface{}) {
+	stmt, err := db.Prepare(query)
+	// log.Printf(query) // // print query
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(args...)
+	if err != nil {
+		log.Printf("ID: %d (%d conexões), %s\n", id, *conns, err.Error())
+	}
+	callback <- id
+	concorrencia.Done()
+}
