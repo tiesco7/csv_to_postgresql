@@ -146,3 +146,17 @@ func insert(id int, query string, db *sql.DB, callback chan<- int, conns *int, c
 	callback <- id
 	concorrencia.Done()
 }
+
+// finaliza
+func conexaoController(inserçoes, qtdConexoes *int, callback <-chan int, disponiveis chan<- bool) {
+
+	go func() {
+		for {
+
+			<-callback
+			*inserçoes += 1
+			*qtdConexoes -= 1
+			disponiveis <- true
+		}
+	}()
+}
