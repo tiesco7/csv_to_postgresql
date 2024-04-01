@@ -160,3 +160,16 @@ func conexaoController(inserçoes, qtdConexoes *int, callback <-chan int, dispon
 		}
 	}()
 }
+
+
+// log 
+func iniciaLog(insertions, connections *int) {
+	go func() {
+		c := time.Tick(time.Second)
+		for {
+			<-c
+			log.Printf(" - %d inserções, %d conexões\n", *insertions, *connections)
+		}
+	}()
+}
+
