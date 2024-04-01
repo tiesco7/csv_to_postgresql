@@ -98,3 +98,35 @@ func main() {
 	log.Printf("Tempo de execução: %s\n", decorrido)
 }
 
+func parseArgsDoCMD() {
+	ip := 			flag.String("ip", IP, "IP de conexão")
+	arq := 			flag.String("a", ARQUIVO, "Arquivo CSV.")
+	base := 		flag.String("base", DATABASE, "Nome da base PostgreSQL.")
+	tabela := 		flag.String("tabela", TABELA, "Nome da tabela PostgreSQL.")
+	delimitador := 	flag.String("d", string(DELIMITADOR), "Delimitador do csv.")
+	max_conex := 	flag.Int("c", MAX_SQL_CONEX, "Número de conexões PostgreSQL max: 150.")
+	usuario := 		flag.String("u", USUARIO, "Usuário PostgreSQL.")
+	senha := 		flag.String("s", SENHA, "Senha PostgreSQL.")
+	flag.Parse()
+
+	ARQUIVO = *arq
+	if *tabela == "" {
+
+		if strings.HasSuffix(ARQUIVO, ".csv") {
+			TABELA = ARQUIVO[:len(ARQUIVO)-len(".csv")]
+		} else {
+			TABELA = ARQUIVO
+		}
+
+	} else {
+		TABELA = *tabela
+	}
+
+	DELIMITADOR = []rune(*delimitador)[0]
+	MAX_SQL_CONEX = *max_conex
+	USUARIO = *usuario
+	SENHA = *senha
+	DATABASE = *base
+	IP = *ip
+}
+
