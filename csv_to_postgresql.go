@@ -189,3 +189,12 @@ func parseColunas(columns []string, query *string) {
 	placeholder += ")"
 	*query += ") " + placeholder 
 }
+
+
+func converte_String_Interface(s []string) []interface{} {
+	i := make([]interface{}, len(s))
+	for k, v := range s {
+		i[k] = v
+	}
+	return i
+}
